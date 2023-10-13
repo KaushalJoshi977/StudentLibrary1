@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -22,4 +22,10 @@ public class Student {
 
     @Column(name = "contact",unique = true)
     private String contact;
+
+    //Name of variable of the Parent Entity that you have written in
+    // child class foreign key attr.
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "student")
+    private Card card;
+
 }

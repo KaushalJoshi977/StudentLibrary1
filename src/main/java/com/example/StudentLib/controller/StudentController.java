@@ -4,6 +4,8 @@ import com.example.StudentLib.Modals.Student;
 import com.example.StudentLib.repositories.StudentRepository;
 import com.example.StudentLib.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,20 +16,20 @@ public class StudentController {
     StudentService studentService;
 
     @PostMapping("/add")
-    public void addStudent(@RequestBody Student student){
-       studentService.addStudent(student);
+    public ResponseEntity<String> addStudent(@RequestBody Student student){
+       return new ResponseEntity<>(studentService.addStudent(student), HttpStatus.CREATED);
     }
     @GetMapping("/get/{id}")
-    public Student getStudent(@PathVariable("id") int id){
-        return studentService.getStudent(id);
+    public ResponseEntity<Student> getStudent(@PathVariable("id") int id){
+        return new ResponseEntity<>(studentService.getStudent(id),HttpStatus.FOUND);
     }
     @PutMapping("/update")
-    public Student update(@RequestParam int id,
+    public ResponseEntity<Student> update(@RequestParam int id,
                           @RequestParam String name){
-        return studentService.updateStudent(id,name);
+        return new ResponseEntity<>(studentService.updateStudent(id,name),HttpStatus.ACCEPTED);
     }
     @DeleteMapping("/delete")
-    public String delete(@RequestParam int id){
-        return studentService.deleteStudent(id);
+    public ResponseEntity<String> delete(@RequestParam int id){
+        return new ResponseEntity<>(studentService.deleteStudent(id),HttpStatus.OK);
     }
 }
